@@ -10,6 +10,17 @@ import joblib
 
 
 def predict_sample(sample: dict, model_path="src/model.joblib"):
+    """
+    Classify a single network-flow sample using a trained model.
+
+    Args:
+        sample: A dictionary describing one network flow.
+        model_path: Path to the saved model file.
+
+    Returns:
+        label: "ATTACK" or "NORMAL".
+        confidence: Probability value for the predicted class.
+    """
     model = joblib.load(model_path)
     df = pd.DataFrame([sample])
     pred = model.predict(df)[0]

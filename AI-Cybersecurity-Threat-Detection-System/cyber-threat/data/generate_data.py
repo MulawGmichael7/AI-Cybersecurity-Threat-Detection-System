@@ -33,6 +33,15 @@ FEATURE_NAMES = [
 
 
 def generate(n_samples=6000):
+    """
+    Generate a synthetic intrusion-detection dataset.
+
+    Args:
+        n_samples: Number of rows to generate in the synthetic dataset.
+
+    Returns:
+        df: A pandas DataFrame containing network-like features and a binary label.
+    """
     X, y = make_classification(
         n_samples=n_samples,
         n_features=len(FEATURE_NAMES),

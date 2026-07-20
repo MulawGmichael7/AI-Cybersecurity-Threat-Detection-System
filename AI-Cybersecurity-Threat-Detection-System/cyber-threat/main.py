@@ -11,6 +11,14 @@ import sys
 sys.path.append("src")
 
 def main():
+    """
+    Run the complete cyber-threat detection pipeline.
+
+    Steps:
+    1. Create the dataset if it does not already exist.
+    2. Train the machine learning model and print evaluation metrics.
+    3. Run the prediction demo using a sample network flow.
+    """
     if not os.path.exists("data/network_traffic.csv"):
         print("Dataset not found — generating it now...")
         from data.generate_data import generate

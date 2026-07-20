@@ -17,6 +17,16 @@ from sklearn.metrics import (
 
 
 def load_data(path="data/network_traffic.csv"):
+    """
+    Load the dataset and split it into features and target.
+
+    Args:
+        path: Location of the CSV file containing the network traffic data.
+
+    Returns:
+        X: Feature matrix with all columns except the label.
+        y: Target label column indicating normal vs attack traffic.
+    """
     df = pd.read_csv(path)
     X = df.drop(columns=["label"])
     y = df["label"]
@@ -24,16 +34,29 @@ def load_data(path="data/network_traffic.csv"):
 
 
 def train_and_evaluate():
+    """
+    Train a Random Forest classifier and evaluate its performance.
+
+    The function:
+    - loads the dataset,
+    - splits it into train/test sets,
+    - trains a Random Forest model,
+    - measures classification performance,
+    - prints evaluation results,
+    - saves the trained model for later use in prediction.
+    """
     X, y = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
 
+    # Create the classifier and train it on the training split.
     model = RandomForestClassifier(
         n_estimators=200, max_depth=12, random_state=42, n_jobs=-1
     )
     model.fit(X_train, y_train)
 
+    # Make predictions on unseen test data.
     y_pred = model.predict(X_test)
 
     metrics = {
@@ -58,6 +81,7 @@ def train_and_evaluate():
     print("Top 5 most important features:")
     print(importances.head(5))
 
+    # Save the trained model so it can be reused later for prediction.
     joblib.dump(model, "src/model.joblib")
     print("\nModel saved to src/model.joblib")
 
